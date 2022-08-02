@@ -4,6 +4,7 @@ namespace Retinens\PontoPhp;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
+use Retinens\PontoPhp\Data\ClientAccessToken;
 use Retinens\PontoPhp\Data\OnboardingDetails;
 
 class PontoClient
@@ -78,17 +79,24 @@ class PontoClient
         return json_decode($response->getBody(), false)->data->id;
     }
 
-    public function getClientAccessToken()
+    public function getClientAccessToken(): ClientAccessToken
     {
         $payload = [
             'grant_type' => 'client_credentials',
         ];
 
-        $this->client->post("oauth2/token", ['body' => $payload]);
+        $response = $this->client->post("oauth2/token", ['body' => $payload]);
 
-        $clientAccessToken = '';
+        if ($response->getStatusCode() == 200) {
+            $responseData = json_decode($response->getBody(),false);
+        }else{
+            throw new \Exception(json_decode($response->getBody(),false));
+        }
 
-        return;
+        return new ClientAccessToken(
+            $responseData->access_token,
+            $responseData->valid_until,
+        );
     }
 
 }
