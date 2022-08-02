@@ -1,6 +1,6 @@
 <?php
 
-namespace Retinens\PontoPhp\Data;
+namespace Retinens\PontoPhp\Objects;
 
 class OnboardingDetails
 {
