@@ -4,8 +4,8 @@ namespace Retinens\PontoPhp;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
-use Retinens\PontoPhp\Data\ClientAccessToken;
-use Retinens\PontoPhp\Data\OnboardingDetails;
+use Retinens\PontoPhp\Objects\ClientAccessToken;
+use Retinens\PontoPhp\Objects\OnboardingDetails;
 
 class PontoClient
 {
