@@ -21,7 +21,7 @@ class PontoClient
     {
 
         $this->client = new  Client([
-            'base_uri' => 'https://api.ibanity.com/ponto-connect',
+            'base_uri' => 'https://api.ibanity.com/ponto-connect/',
             'cert' => [$certPath, $certSecret],
             'ssl_key' => [$sslPath],
             'headers' => [
