@@ -1,0 +1,19 @@
+{
+    "name": "retinens/ponto-php",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^7.4"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Retinens\\PontoPhp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "WhereIsLucas",
+            "email": "lucas@retinens.com"
+        }
+    ]
+}
