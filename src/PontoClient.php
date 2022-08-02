@@ -74,7 +74,7 @@ class PontoClient
                 'attributes' => $onboardingDetails->toArray(),
             ],
         ];
-        $response = $this->client->post('onboarding-details', ['form_params' => $payload]);
+        $response = $this->client->post('onboarding-details', ['json' => $payload]);
 
         return json_decode($response->getBody(), false)->data->id;
     }
@@ -85,7 +85,7 @@ class PontoClient
             'grant_type' => 'client_credentials',
         ];
 
-        $response = $this->client->post("oauth2/token", ['form_params' => $payload]);
+        $response = $this->client->post("oauth2/token", ['json' => $payload]);
 
         if ($response->getStatusCode() == 200) {
             $responseData = json_decode($response->getBody(),false);
