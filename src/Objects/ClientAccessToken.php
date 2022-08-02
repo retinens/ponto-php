@@ -5,11 +5,9 @@ namespace Retinens\PontoPhp\Objects;
 class ClientAccessToken
 {
     public string $accessToken;
-    public string $validUntil;
 
-    public function __construct($accessToken, $validUntil)
+    public function __construct($accessToken)
     {
         $this->accessToken = $accessToken;
-        $this->validUntil = $validUntil;
     }
 }

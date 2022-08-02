@@ -66,7 +66,7 @@ class PontoClient
         $this->method = $method;
     }
 
-    public function sendOnboardingDetails(OnboardingDetails $onboardingDetails)
+    public function sendOnboardingDetails(OnboardingDetails $onboardingDetails, ClientAccessToken $clientAccessToken)
     {
         $payload = [
             'data' => [
@@ -74,9 +74,15 @@ class PontoClient
                 'attributes' => $onboardingDetails->toArray(),
             ],
         ];
-        $response = $this->client->post('onboarding-details', ['json' => $payload]);
+        $headers = [
+            'Authorization' => 'Bearer '.$clientAccessToken->accessToken
+        ];
 
-        return json_decode($response->getBody(), false)->data->id;
+        $response = $this->client->post('onboarding-details', ['json' => $payload,'headers' => $headers]);
+
+        dd(json_decode($response->getBody(), false));
+
+//        return ->data->id;
     }
 
     public function getClientAccessToken(): ClientAccessToken
@@ -84,8 +90,11 @@ class PontoClient
         $payload = [
             'grant_type' => 'client_credentials',
         ];
+        $headers = [
+            'Authorization' => 'Basic '.base64_encode($this->clientId.":".$this->clientSecret)
+        ];
 
-        $response = $this->client->post("oauth2/token", ['json' => $payload]);
+        $response = $this->client->post("oauth2/token", ['json' => $payload,'headers' => $headers]);
 
         if ($response->getStatusCode() == 200) {
             $responseData = json_decode($response->getBody(),false);
@@ -95,7 +104,6 @@ class PontoClient
 
         return new ClientAccessToken(
             $responseData->access_token,
-            $responseData->valid_until,
         );
     }
 
