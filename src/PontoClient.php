@@ -4,6 +4,7 @@ namespace Retinens\PontoPhp;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
+use Retinens\PontoPhp\Data\OnboardingDetails;
 
 class PontoClient
 {
@@ -13,7 +14,7 @@ class PontoClient
     public array $payload = [];
     public string $path;
 
-    public function __construct($certPath,$sslPath,$certSecret)
+    public function __construct($certPath, $sslPath, $certSecret)
     {
 
         $this->client = new  Client([
@@ -54,6 +55,19 @@ class PontoClient
         $this->path = $path;
         $this->payload = $payload;
         $this->method = $method;
+    }
+
+    public function sendOnboardingDetails(OnboardingDetails $onboardingDetails)
+    {
+        $payload = [
+            'data' => [
+                'type' => 'onboardingDetails',
+                'attributes' => $onboardingDetails->toArray(),
+            ],
+        ];
+        $response = $this->client->post('onboarding-details', [$payload]);
+
+        return json_decode($response->getBody(), false)->data->id;
     }
 
 }
