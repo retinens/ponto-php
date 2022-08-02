@@ -13,6 +13,8 @@ class PontoClient
     public string $method = 'GET';
     public array $payload = [];
     public string $path;
+    public ?string $clientId;
+    public ?string $clientSecret;
 
     public function __construct($certPath, $sslPath, $certSecret)
     {
@@ -35,6 +37,12 @@ class PontoClient
 //        if ($tenantAuth) {
 //            $this->httpClient->withToken($tenantAuth->ponto_access_token);
 //        }
+    }
+
+    public function setBasicAuthDetails($clientId, $clientSecret): void
+    {
+        $this->clientId = $clientId;
+        $this->clientSecret = $clientSecret;
     }
 
     public function sendRequest(): ResponseInterface
@@ -65,9 +73,22 @@ class PontoClient
                 'attributes' => $onboardingDetails->toArray(),
             ],
         ];
-        $response = $this->client->post('onboarding-details', [$payload]);
+        $response = $this->client->post('onboarding-details', ['body' => $payload]);
 
         return json_decode($response->getBody(), false)->data->id;
+    }
+
+    public function getClientAccessToken()
+    {
+        $payload = [
+            'grant_type' => 'client_credentials',
+        ];
+
+        $this->client->post("oauth2/token", ['body' => $payload]);
+
+        $clientAccessToken = '';
+
+        return;
     }
 
 }
