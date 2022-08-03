@@ -24,6 +24,7 @@ class FinancialInstitution
     public array $bulkPaymentsProductTypes = [];
     public bool $bulkPaymentsEnabled;
     public ?string $bic;
+    public ?string $name;
 
     public function __construct(string $id, array $attributes)
     {
@@ -47,5 +48,6 @@ class FinancialInstitution
         $this->bulkPaymentsProductTypes = $attributes['bulkPaymentsProductTypes'];
         $this->bulkPaymentsEnabled = $attributes['bulkPaymentsEnabled'];
         $this->bic = $attributes['bic'];
+        $this->name = $attributes['name'];
     }
 }
