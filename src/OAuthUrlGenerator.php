@@ -10,8 +10,9 @@ class OAuthUrlGenerator
     public bool $live = false;
     public string $verifier = '';
 
-    public function __construct()
+    public function __construct($live = false)
     {
+        $this->live = $live;
     }
 
 
